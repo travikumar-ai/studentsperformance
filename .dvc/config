@@ -1,0 +1,4 @@
+[core]
+    remote = googlecloud
+['remote "googlecloud"']
+    url = gs://student-performance-2704
