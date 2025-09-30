@@ -1,0 +1,12 @@
+# For development, install the project in editable mode with dev dependencies
+-e .
+
+dvc[gs]
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+xgboost
+catboost
+mlflow
