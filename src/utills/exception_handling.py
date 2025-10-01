@@ -4,7 +4,6 @@ import logging
 from src.utills import logger
 
 
-
 def ExceptionConfig(error, sys) -> str:
     _, _, exc_td = sys.exc_info()
     

@@ -2,11 +2,15 @@ import logging
 import os
 from datetime import datetime
 
+import yaml
+
+log_path_config = yaml.safe_load(open('config/params.yaml'))['log']['log_file_path']
+
 LOG_FILE_NAME = f"{datetime.now().strftime("%d_%m_%y")}.log"
 
 log_file_path = os.path.join(
                             os.getcwd(),
-                            'logs',
+                            log_path_config,
                             )
 
 os.makedirs(

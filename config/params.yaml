@@ -1,0 +1,16 @@
+log:
+  log_file_path: logs
+
+data:
+  data_dir: data
+  data_file_name: data.csv
+  raw_data_file_name: raw_data.csv
+  train_data_file_name: train_data.csv
+  test_data_file_name: test_data.csv
+
+src:
+  src_path: src
+  artifacts:
+    artifacts_path: artifacts
+    processor_path: processor.pkl
+

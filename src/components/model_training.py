@@ -1,35 +1,28 @@
-from dataclasses import dataclass
+import logging
 import os
 import sys
+from dataclasses import dataclass
 
-import logging
-
-
-from src.utills import logger
-from src.utills.exception_handling import CustomException
-
+import dagshub
+import mlflow
+from catboost import CatBoostRegressor
+from mlflow.models import infer_signature
+from sklearn.ensemble import (AdaBoostRegressor, GradientBoostingRegressor,
+                              RandomForestRegressor)
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import (mean_squared_error, r2_score,
+                             root_mean_squared_error)
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.svm import SVR
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import (RandomForestRegressor,
-                              AdaBoostRegressor,
-                              GradientBoostingRegressor)
-
 from xgboost import XGBRegressor
-from catboost import CatBoostRegressor
 
+from src.utills import logger
+from src.utills.exception_handling import CustomException
+from src.utills.utilities import evaluate_model, save_object
 
-from sklearn.metrics import (mean_squared_error,
-                             root_mean_squared_error,
-                             r2_score)
-
-
-from src.utills.utilities import save_object, evaluate_model
-
-import mlflow
-from mlflow.models import infer_signature
-
+dagshub.init(repo_name='studentsperformance', 
+             repo_owner='travikumar3456', mlflow=True)
 
 @dataclass
 class ModelTrainingConfig:
@@ -152,8 +145,7 @@ class Modeltrainer:
                 mlflow.sklearn.log_model(
                     sk_model= best_model,
                     artifact_path='model',
-                    signature=signature,
-                    registered_model_name=f'{best_model_name}'
+                    signature=signature
                 )
                 
                 if best_model_score < 0.6:

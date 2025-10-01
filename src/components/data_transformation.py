@@ -1,29 +1,31 @@
-from dataclasses import dataclass
+import logging
 import os
 import sys
-
-import logging
-from src.utills import logger
-from src.utills.exception_handling import CustomException
+from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-
-from sklearn.impute import SimpleImputer
+import yaml
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from src.utills.utilities import save_object, evaluate_model
+from src.utills import logger
+from src.utills.exception_handling import CustomException
+from src.utills.utilities import evaluate_model, save_object
 
-
-
+config = yaml.safe_load(open('config/params.yaml'))
+src_path = config['src']['src_path']
+artifacts_path = config['src']['artifacts']['artifacts_path']
+processor_path = config['src']['artifacts']['processor_path']
 @dataclass
 class data_transformation_config:
     processor_obj_file_path = os.path.join(
         os.getcwd(),
-        'src/artifacts',
-        'processor.pkl'
+        src_path, 
+        artifacts_path,
+        processor_path
     )
     
 class DataTransform:
@@ -113,3 +115,4 @@ class DataTransform:
             error_msg = CustomException(e, sys)
             logging.error(f'Error occurred at: [{error_msg}]')
             raise CustomException(e, sys)
+
